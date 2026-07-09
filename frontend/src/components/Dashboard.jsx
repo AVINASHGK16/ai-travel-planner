@@ -27,7 +27,8 @@ export default function Dashboard() {
     ];
 
     try {
-      const response = await fetch('http://localhost:5000/api/generate-itinerary', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiUrl}/api/generate-itinerary`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +50,8 @@ export default function Dashboard() {
       setItineraryResult(result);
     } catch (err) {
       console.error("Error fetching itinerary:", err);
-      setError(err.message || "Failed to connect to the backend server. Make sure the Node server is running on http://localhost:5000.");
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      setError(err.message || `Failed to connect to the backend server. Make sure the Node server is running on ${apiUrl}.`);
     } finally {
       setIsLoading(false);
     }
